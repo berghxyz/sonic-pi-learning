@@ -1,0 +1,122 @@
+kick = "C:/Users/eb/Downloads/CymaticsTrapStarterPack-V1-t5r/Cymatics - Trap Starter Pack/Kick/Cymatics - Tape Noise Kick.wav"
+clap = "C:/Users/eb/Downloads/CymaticsTrapStarterPack-V1-t5r/Cymatics - Trap Starter Pack/Claps/Cymatics - Trap Clap.wav"
+hhc = "C:/Users/eb/Downloads/CymaticsTrapStarterPack-V1-t5r/Cymatics - Trap Starter Pack/Hihats - Closed/Cymatics - Yellow Hihat.wav"
+hho = "C:/Users/eb/Downloads/CymaticsTrapStarterPack-V1-t5r/Cymatics - Trap Starter Pack/Hihats - Open/Cymatics - Wide Open Hihat.wav"
+
+
+all_i_need = "C:/Users/eb/Downloads/CymaticsOrchidSamplePack-V3-e4a/Cymatics - Orchid Sample Pack/Melody Loops/Cymatics - All I Need - 165 BPM D# Min.wav"
+
+use_bpm 70
+
+live_loop :met1 do
+  sleep 1
+end
+
+define :pattern do |pattern|
+  return pattern.ring.tick =="x"
+end
+
+##| play_clap = false
+##| set :play_hhc, true
+##| set :play_hhc, true
+##| set :play_hho, true
+##| set :play_clap, true
+
+live_loop :page, sync: :met1 do
+  ##| stop
+  sleep 8
+  sample :ambi_choir
+  set :play_clap, 1
+  set :play_hhc, true
+  set :play_hho, true
+  
+end
+
+live_loop :clap, sync: :met1 do
+  ##| stop
+  sleep 1
+  sample clap, amp: get(:play_clap)
+  sleep 1
+end
+
+
+live_loop :hhc, sync: :met1 do
+  ##| stop
+  a = 1
+  sample hhc, amp: a if pattern "x---x---x---x-xxx-x-x-x-x-x-x-x-" if get(:play_hhc)
+  ##| sample hhc
+  sleep 0.125
+end
+
+live_loop :hho, sync: :met1 do
+  ##| stop
+  a = 1
+  sleep 0.5
+  sample hho, amp: a  if get(:play_hho)
+  sleep 0.5
+end
+
+live_loop :kick, sync: :met1 do
+  sample kick, amp: get(:kick_amp) if pattern "x-----x---x--x--"
+  sleep 0.25
+end
+
+
+
+live_loop :vocal, sync: :met1 do
+  ##| sample all_i_need
+  ##| sleep 20
+  ##| 4.times do
+  ##|   sample all_i_need, attack: 2, release: 2, sustain: 6, decay: 2
+  ##|   sleep 11
+  ##| end
+  ##| 4.times do
+  ##|   sample all_i_need, start: 0, finish: 0.02
+  ##|   sleep 4
+  ##| end
+  ##| 2.times do
+  ##|   sample all_i_need, start: 0.1, finish: 0.12
+  ##|   sleep 4
+  ##| end
+  ##| 2.times do
+  ##|   sample all_i_need, start: 0, finish: 0.02
+  ##|   sleep 4
+  ##| end
+  
+  ##| stop
+  sample all_i_need, amp: 2, start: 0.1, finish: 0.12
+  sleep 2
+  sample all_i_need, amp: 2, start: 0.1, finish: 0.12, rate: 0.5, rpitch: 8
+  sleep 2
+  
+  
+end
+
+## dj_dave code i borowed to understand
+with_fx :reverb, mix: 0.4 do
+  live_loop :synth_bass_02, sync: :met1 do
+    stop
+    a = 1.2
+    c = 50
+    r = 0.5
+    c2 = 60
+    use_synth :saw
+    32.times do
+      play :a1, cutoff: c, amp: a, release: r
+      play :a2, cutoff: c, amp: a, release: r
+      sleep 0.25
+    end
+    ##| set :kick_amp, 0
+    32.times do
+      play :g1, cutoff: c, amp: a, release: r
+      play :g2, cutoff: c, amp: a, release: r
+      sleep 0.25
+    end
+    ##| set :kick_amp, 3
+    64.times do
+      play :f1, cutoff: c, amp: a, release: r
+      play :f2, cutoff: c, amp: a, release: r
+      sleep 0.25
+    end
+  end
+end
