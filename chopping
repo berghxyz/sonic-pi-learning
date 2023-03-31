@@ -1,0 +1,35 @@
+kick = "C:/Users/eb/Downloads/CymaticsTrapStarterPack-V1-t5r/Cymatics - Trap Starter Pack/Kick/Cymatics - Tape Noise Kick.wav"
+clap = "C:/Users/eb/Downloads/CymaticsTrapStarterPack-V1-t5r/Cymatics - Trap Starter Pack/Claps/Cymatics - Trap Clap.wav"
+hhc = "C:/Users/eb/Downloads/CymaticsTrapStarterPack-V1-t5r/Cymatics - Trap Starter Pack/Hihats - Closed/Cymatics - Yellow Hihat.wav"
+all_i_need = "C:/Users/eb/Downloads/CymaticsOrchidSamplePack-V3-e4a/Cymatics - Orchid Sample Pack/Melody Loops/Cymatics - All I Need - 165 BPM D# Min.wav"
+
+use_bpm 60
+
+live_loop :met1 do
+  sleep 1
+end
+
+live_loop :vocal, sync: :met1 do
+  ##| 4.times do
+  ##|   sample all_i_need, attack: 2, release: 2, sustain: 6, decay: 2
+  ##|   sleep 11
+  ##| end
+  ##| 4.times do
+  ##|   sample all_i_need, start: 0, finish: 0.02
+  ##|   sleep 4
+  ##| end
+  ##| 2.times do
+  ##|   sample all_i_need, start: 0.1, finish: 0.12
+  ##|   sleep 4
+  ##| end
+  ##| 2.times do
+  ##|   sample all_i_need, start: 0, finish: 0.02
+  ##|   sleep 4
+  ##| end
+  
+  sample all_i_need, start: 0.1, finish: 0.12
+  sleep 2
+  sample all_i_need, start: 0.1, finish: 0.12, rate: 0.5, rpitch: 8
+  sleep 2
+  
+end
